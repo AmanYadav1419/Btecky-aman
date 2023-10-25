@@ -40,9 +40,9 @@ def store_image(image_tensor, filename):
   if not isinstance(image_tensor, Image.Image):
     image_tensor = tf.clip_by_value(image_tensor, 0, 255)
     image_tensor = Image.fromarray(tf.cast(image_tensor, tf.uint8).numpy())
-  
-  image_tensor.save("%s.jpg" % filename)
-  print("Saved as %s.jpg" % filename)
+
+  image_tensor.save(f"{filename}.jpg")
+  print(f"Saved as {filename}.jpg")
 
 def display_image(image_tensor, title=""):
   """

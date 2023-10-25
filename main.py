@@ -12,19 +12,13 @@ while True:
     frame_hight, frame_width,_ = frame.shape
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     output = hand_detector.process(rgb_frame)
-    hands = output.multi_hand_landmarks
-    if hands:
+    if hands := output.multi_hand_landmarks:
         for hand in hands:
             drawing_utils.draw_landmarks(frame, hand)
             landmarks = hand.landmark
-            for id,landmark in enumerate(landmarks):
+            for id, landmark in enumerate(landmarks):
                 x = int(landmark.x*frame_width)
                 y = int(landmark.y*frame_hight)
-                if id == 8:
-                    cv2.circle(img=frame, center=(x,y), radius=30,color=(0, 255, 255))
-                    index_x = screen_width/frame_width*x
-                    index_y = screen_height/frame_hight*y
-                    pyautogui.moveTo(index_x, index_y)
                 if id == 4:
                     cv2.circle(img=frame, center=(x,y), radius=30,color=(0, 255, 255))
                     thumb_x = screen_width/frame_width*x
@@ -33,6 +27,11 @@ while True:
                     if abs(index_y-thumb_y) < 80:
                         pyautogui.click()
                         pyautogui.sleep(1)
+                elif id == 8:
+                    cv2.circle(img=frame, center=(x,y), radius=30,color=(0, 255, 255))
+                    index_x = screen_width/frame_width*x
+                    index_y = screen_height/frame_hight*y
+                    pyautogui.moveTo(index_x, index_y)
                 print(x,y)
 
     cv2.imshow('My Own Virtual Mouse',frame)
